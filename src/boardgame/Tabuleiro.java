@@ -8,7 +8,7 @@ public class Tabuleiro {
 	
 	public Tabuleiro(int linhas, int colunas) {
 		if (linhas < 1 || colunas < 1) {
-			throw new XadrezException("Erro ao criar o tabuleiro. Deverá ser criado pelo menos com tamanho de 1 x 1");
+			throw new BoardException("Erro ao criar o tabuleiro. Deverá ser criado pelo menos com tamanho de 1 x 1");
 		}
 		this.linhas = linhas;
 		this.colunas = colunas;
@@ -26,21 +26,21 @@ public class Tabuleiro {
 
 	public Peca peca(int linha, int coluna) {
 		if (!posicaoExists(linha, coluna)) {
-			throw new XadrezException("Posição fora do tabuleiro");
+			throw new BoardException("Posição fora do tabuleiro");
 		}
 		return pecas[linha][coluna];
 	}
 	
 	public Peca peca(Posicao posicao) {
 		if (!posicaoExists(posicao)) {
-			throw new XadrezException("Posição fora do tabuleiro");
+			throw new BoardException("Posição fora do tabuleiro");
 		}
 		return pecas[posicao.getLinha()][posicao.getColuna()];
 	}
 	
 	public void PosicaoPeca(Peca peca, Posicao posicao) {
 		if (isPeca(posicao)) {
-			throw new XadrezException("Já existe uma peça na posição " + posicao);
+			throw new BoardException("Já existe uma peça na posição " + posicao);
 		}
 		pecas[posicao.getLinha()][posicao.getColuna()] = peca;
 		peca.posicao = posicao;
@@ -56,7 +56,7 @@ public class Tabuleiro {
 	
 	public boolean isPeca(Posicao posicao) {
 		if (!posicaoExists(posicao)) {
-			throw new XadrezException("Posição fora do tabuleiro");
+			throw new BoardException("Posição fora do tabuleiro");
 		}
 		return peca(posicao) != null;	
 	}
