@@ -28,16 +28,21 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-	
+
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console
+	public static void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+
 	public static XadrezPosicao readXadrezPosicao(Scanner sc) {
 		try {
-		String s = sc.nextLine();
-		char coluna = s.charAt(0);
-		int linha = Integer.parseInt(s.substring(1));
-		
-		return new XadrezPosicao(coluna, linha);
-		}
-		catch (RuntimeException e) {
+			String s = sc.nextLine();
+			char coluna = s.charAt(0);
+			int linha = Integer.parseInt(s.substring(1));
+
+			return new XadrezPosicao(coluna, linha);
+		} catch (RuntimeException e) {
 			throw new InputMismatchException("Erro ao ler XadrezPosicao. Valores válidos são de a1 à h8");
 		}
 	}
@@ -45,28 +50,26 @@ public class UI {
 	public static void imprimeTabuleiro(PecaXadrez[][] p) {
 		for (int i = 0; i < p.length; i++) {
 			System.out.print((8 - i) + " ");
-			for (int j = 0; j < p[i].length; j ++) {
+			for (int j = 0; j < p[i].length; j++) {
 				imprimePeca(p[i][j]);
 			}
 			System.out.println();
 		}
-		
+
 		System.out.println("  a b c d e f g h");
-		
+
 	}
-	
+
 	private static void imprimePeca(PecaXadrez p) {
-	   	if (p == null) {
-            System.out.print("-");
-        }
-        else {
-            if (p.getCor() == Cor.BRANCO) {
-                System.out.print(ANSI_WHITE + p + ANSI_RESET);
-            }
-            else {
-                System.out.print(ANSI_YELLOW + p + ANSI_RESET);
-            }
-        }
-        System.out.print(" ");
+		if (p == null) {
+			System.out.print("-");
+		} else {
+			if (p.getCor() == Cor.BRANCO) {
+				System.out.print(ANSI_WHITE + p + ANSI_RESET);
+			} else {
+				System.out.print(ANSI_YELLOW + p + ANSI_RESET);
+			}
+		}
+		System.out.print(" ");
 	}
 }
