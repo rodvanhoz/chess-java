@@ -1,5 +1,8 @@
 package xadrez;
 
+import boardgame.BoardException;
+import boardgame.Peca;
+import boardgame.Posicao;
 import boardgame.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -22,6 +25,30 @@ public class PartidaXadrez {
 		}
 		
 		return mat;
+	}
+	
+	public PecaXadrez performXadrezMovimento(XadrezPosicao origemPosicao, XadrezPosicao destinoPosicao) {
+		Posicao origem  = origemPosicao.toPosicao();
+		Posicao destino = destinoPosicao.toPosicao();
+		
+		validarSourcePosicao(origem);
+		
+		Peca pecaCapturada = fazerMovto(origem, destino);
+		return (PecaXadrez) pecaCapturada;
+	}
+	
+	private void validarSourcePosicao(Posicao posicao) {
+		if (!tabuleiro.isPeca(posicao)) {
+			throw new BoardException("Peça fora do tabuleiro");
+		}
+	}
+	
+	private Peca fazerMovto(Posicao origem, Posicao destino) {
+		Peca p = tabuleiro.removePeca(origem);
+		Peca pecaCapturada = tabuleiro.removePeca(destino);
+		
+		tabuleiro.PosicaoPeca(p, destino);
+		return pecaCapturada;
 	}
 	
 	private void posicaoNovaPeca(char coluna, int linha, PecaXadrez pecaXadrez) {

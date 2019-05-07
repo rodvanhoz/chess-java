@@ -38,6 +38,20 @@ public class Tabuleiro {
 		return pecas[posicao.getLinha()][posicao.getColuna()];
 	}
 	
+	public Peca removePeca(Posicao posicao) {
+		if (!posicaoExists(posicao)) {
+			throw new BoardException("Posição inválida no tabuleiro");
+		}
+		if (peca(posicao) == null) {
+			return null;
+		}
+		Peca aux = peca(posicao);
+		aux.posicao = null;
+		
+		pecas[posicao.getLinha()][posicao.getColuna()] = null;
+		return aux;
+	}	
+	
 	public void PosicaoPeca(Peca peca, Posicao posicao) {
 		if (isPeca(posicao)) {
 			throw new BoardException("Já existe uma peça na posição " + posicao);
