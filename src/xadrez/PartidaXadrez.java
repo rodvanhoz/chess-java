@@ -41,6 +41,9 @@ public class PartidaXadrez {
 		if (!tabuleiro.isPeca(posicao)) {
 			throw new BoardException("Peça fora do tabuleiro");
 		}
+		if (!tabuleiro.peca(posicao).isMovtoPossivel()) {
+			throw new XadrezException("Não ha movimentos possíveis para esta peça");
+		}
 	}
 	
 	private Peca fazerMovto(Posicao origem, Posicao destino) {
